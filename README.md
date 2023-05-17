@@ -32,6 +32,7 @@ VGER's VCMR was previously hosted on Labnodes. It was transferred to FilemakerPr
 ## Notes
 - local dev via local webserver - `python -m http.server 8000` then http://localhost:8000/index.html
 - http://vcmr.vcscb.org/ - custom address, VUIT added CNAME record for DNS
+- The `CNAME` file in the repository is Github-generated!
 - HTTPS vs HTTP will take another ~24hrs until certificate is generated
 - Hosting is via Github Pages, using “vcmr.vcscb.org” as custom domain:
 - Requested for `vcmr` subdomain to be added as CNAME record via VUIT
