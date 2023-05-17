@@ -8,21 +8,22 @@ VGER's VCMR was previously hosted on Labnodes. It was transferred to FilemakerPr
 
 ## Features
 
-1.	Main page is “about VCMR” and table of all records. 
+1. Main page is “about VCMR” and table of all records. 
    a.	You can pick & choose which fields/columns to include. I tried to keep it succinct.
    b.	I intentionally avoided pagination. It is much easier/faster to scroll than click next page buttons
-2.	Every record is linked to a page that only displays info about that record
+   c. A filter option exists to filter table rows by available `Type of Mutation`
+2. Every record is linked to a page that only displays info about that record
    a.	URL is unique, so you can hyperlink to individual records
    b.	For now, I’m using the VGER ID in the URL, but we can do anything you’d like
    c.	I haven’t bothered with attachments yet
    d.	The record level data is being dumped into a table, just as a “demo” – we can/will style it up
    e.	Email/request details to be fine-tuned, etc…
-3.	Updating/adding records (for now, this is how I did it)
+3. Updating/adding records (for now, this is how I did it)
    a.	Took XLSX file you exported from FMPro
    b.	Opened in Excel, exported to CSV
    c.	Added to project repository (Github) and pushed to Github Pages
-4.	No “guest login” whatsoever
-5.	All front-end technology (html, javascript, css. all libs are CDN-provisioned)
+4. No “guest login” whatsoever
+5. All front-end technology (html, javascript, css. all libs are CDN-provisioned)
    a.	HTML5
    b.	Bootstrap5
    c.	Jquery

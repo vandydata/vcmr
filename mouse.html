@@ -34,31 +34,28 @@
 
 <div class="col-lg-8 mx-auto p-3 py-md-5">
   <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
-    <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-      <a href="index.html"><span class="fs-4">VCMR</span></a>
+    <a href="/" class="d-flex align-items-center text-dark">
+      <span class="fs-4">VCMR</span>
     </a>
+    <span  class="fs-4" id="cookie-container" style="padding-left:5px;"></span>
   </header>
 
   <main>
     <h1>Vanderbilt Cryopreserved Mouse Repository</h1>
 
       <div class="row">
-        <div class="col">
-          <p class="fs-5 col-md-12">The Vanderbilt Cryopreserved Mouse Repository (VCMR) contains a unique collection of genetically-modified mice that available for rederivation.  All lines have been either generated or modified by Vanderbilt investigators, and are not available in any other repository.</p>
+        <div class="col-8">
+          <p class="lead">The Vanderbilt Cryopreserved Mouse Repository (VCMR) contains a unique collection of genetically-modified mice that available for rederivation.  All lines have been either generated or modified by Vanderbilt investigators, and are not available in any other repository.</p>
         </div>
-        <div class="col">
-          <div class="alert alert-success" role="alert">
-            <h4 class="alert-heading"><i class="fa-solid fa-2xl  fa-envelope" style="color: #ffffff;"></i>Order this mouse!</h4>
+        <div class="col-4">
+          <div class="alert alert-warning" role="info">
+            <h4 class="alert-heading"><i class="fa-solid fa-xl fa-envelope" style="color: #15141A;"></i> Order this mouse!</h4>
             <p></p>
             <hr>
             <p class="mb-0">These are the instructions...</p>
           </div>
         </div>
       </div>
-
-
-
-
 
     <hr class="col-3 col-md-2 mb-5">
 
@@ -133,6 +130,11 @@
         // Append the table to the data container div
         const dataContainer = document.getElementById('data-container');
         dataContainer.appendChild(table);
+
+        // cookiecrumb
+        lineName = "› " + rowData["Formal Line Name"];
+        const cookieContainer = document.getElementById('cookie-container');
+        cookieContainer.innerText = lineName;
 
       } else {
         // Handle case when no matching row is found

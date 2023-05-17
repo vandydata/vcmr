@@ -6,7 +6,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <meta name="generator" content="0">
-  <title>Starter Template · Bootstrap v5.0</title>
+  <title>Vanderbilt Cryopreserved Mouse Repository (VCMR) - Managed by VGER at Vanderbilt University</title>
 
   <!-- Bootstrap core CSS -->
   <link href="//cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -33,8 +33,9 @@
     }
     #myTable thead th {
       border-bottom: 2px solid rgba(0, 0, 0, 0.3) !important;
-
     }
+
+
   </style>
 
 </head>
@@ -52,11 +53,39 @@
 
     <p class="lead">The Vanderbilt Cryopreserved Mouse Repository (VCMR) contains a unique collection of genetically-modified mice that available for rederivation.  All lines have been either generated or modified by Vanderbilt investigators, and are not available in any other repository.</p>
 
-    <hr class="col-3 col-md-2 mb-5">
+    <!--<hr class="col-3 col-md-2 mb-5">-->
 
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card bg-light">
+          <div class="card-body">
+            <h5 class="card-title">The following factors are considered prior to accepting strains into the VCMR.</h5>
+            <ul class="icon-list text-muted">
+              <li>Is the strain of potential value to other researchers?</li>
+              <li>If the strain is available elsewhere, has it been modified by changing the genetic background to through intercrossing with other alleles?</li>
+              <li>Has the strain been published?</li>
+              <li>If the strain is unpublished, is there sufficient documentation and evidence that it functions as desired?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body bg-light">
+            <h5 class="card-title">Benefits of the Vanderbilt Cryopreserved Mouse Repository:</h5>
+            <ul class="icon-list text-muted">
+              <li>Facilitates compliance with NIH sharing policy</li>
+              <li>Serves as an online resource of cryopreserved germplasm at Vanderbilt</li>
+              <li>May avoid importing mice from an outside repository</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--
     <div class="row g-5">
       <div class="col-md-6">
-        <!--<h2>Starter projects</h2>-->
         <p>The following factors are considered prior to accepting strains into the VCMR.</p>
         <ul class="icon-list text-muted">
           <li>Is the strain of potential value to other researchers?</li>
@@ -67,7 +96,6 @@
       </div>
 
       <div class="col-md-6">
-        <!--<h2>Guides</h2>-->
         <p>Benefits of the Vanderbilt Cryopreserved Mouse Repository:</p>
         <ul class="icon-list text-muted">
           <li>Facilitates compliance with NIH sharing policy</li>
@@ -75,15 +103,26 @@
           <li>May avoid importing mice from an outside repository</li>
         </ul>
       </div>
-    </div>
+    </div>-->
 
-    <hr class="col-3 col-md-2 mb-5">
+    <!--<hr class="col-3 col-md-2 mb-5">-->
+    <br />
+      <div class="row">
+        <div class="col">
 
-    </table>
 
-    <table id="myTable" class="table">
-      <!-- Table headers will be dynamically generated -->
-    </table>
+          <!-- VCMR data -->
+          <div id="filterButtons" class="float-start btn-group  btn-group-sm" role="group" aria-label="Mutation type selection" style="">
+            Filter:&nbsp;
+          </div>
+
+          <table id="myTable" class="table float-end"  style="width:100%">
+            <!-- Table headers will be dynamically generated -->
+          </table>
+
+
+        </div>
+      </div>
 
   </main>
   <footer class="pt-5 my-5 text-muted border-top">
@@ -120,12 +159,13 @@
       complete: function(results) {
         var data = results.data;
 
-        console.log(data);
+        //console.log(data);
 
-        $('#myTable').DataTable({
+        var table = $('#myTable').DataTable({
+          data: data,
           fixedHeader: true,
           paging: false,
-          data: data,
+          dom: '<"pull-left" fi><t>',
           columns: [
             { data: 'VGER ID', title: 'VGER ID' },
             {
@@ -154,6 +194,43 @@
           // Extract the necessary data from rowData
           // Navigate to the detail page using JavaScript or an anchor tag
         });
+
+        // Get unique values from the desired column
+        var uniqueValues = Array.from(new Set(data.map(item => item['Type of Mutation'])));
+        console.log(uniqueValues);
+
+
+        var container = $('#filterButtons');
+        function filterColumn( value ) {
+          table.column(2).search( value ).draw();
+        }
+
+        var resetButton = $('<button>', {
+          class: 'btn btn-light',
+          text: 'Reset',
+          click: function() {
+            filterColumn("");
+          }
+        });
+
+        container.append(resetButton);
+
+        uniqueValues.forEach(function(value) {
+          var button = $('<button>', {
+            class: 'btn  btn-outline-secondary',
+            text: value,
+            click: function() {
+              var filterValue = value;
+              //console.log(filterValue);
+              filterColumn(filterValue);
+            }
+          });
+
+          container.append(button);
+        });
+
+
+
 
       }
     });
