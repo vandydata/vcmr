@@ -27,6 +27,10 @@
         font-size: 3.5rem;
       }
     }
+
+    th {
+      white-space: nowrap;
+    }
   </style>
 
 </head>
@@ -59,6 +63,8 @@
 
     <hr class="col-3 col-md-2 mb-5">
 
+    <div id="table-container2"></div>
+
     <div id="data-container"></div>
 
 
@@ -85,7 +91,7 @@
   const rowId = urlParams.get('vger_id');
 
   // Load the CSV file
-  Papa.parse('VCMR.csv', {
+  Papa.parse('VCMRv3.csv', {
     download: true,
     header: true,
     skipEmptyLines: "greedy", // Skip empty lines, including potential trailing newlines
@@ -93,12 +99,10 @@
     complete: function(results) {
       const rowData = results.data.find(row => row['VGER ID'] === rowId);
       //console.log(rowData);
-
+/*
       if (rowData) {
         // Display the row data in the HTML container
-        /*const dataContainer = document.getElementById('data-container');
-        dataContainer.innerText = JSON.stringify(rowData);*/
-
+        console.log(rowData);
         // Create the HTML table
         const table = document.createElement('table');
         table.classList.add('table'); // Add the desired CSS class to the table
@@ -140,6 +144,56 @@
         // Handle case when no matching row is found
         const dataContainer = document.getElementById('data-container');
         dataContainer.innerText = 'No matching row found.';
+      }
+
+      */
+
+
+      if (rowData){
+        var tableContainer = document.getElementById("table-container2");
+
+
+        var table = document.createElement("table");
+        table.classList.add('table'); // Add the desired CSS class to the table
+        table.classList.add('table-striped'); // Add the desired CSS class to the table
+        const tableBody = document.createElement('tbody');
+
+        for (var key in rowData) {
+          if (rowData.hasOwnProperty(key)) {
+            var row = document.createElement("tr");
+
+            var cell1 = document.createElement("th");
+            cell1.textContent = key;
+            row.appendChild(cell1);
+
+            var cell2 = document.createElement("td");
+            var value = rowData[key];
+
+            // Customize the value before displaying
+            if (key === "Formal Line Name") {
+              value = value.replace("{", "<sup>");
+              value = value.replace("}", "</sup>");
+            } else if (key === "Common Line Name") {
+              value = value.replace("{", "<sup>");
+              value = value.replace("}", "</sup>");
+            } else if (key === "Genotyping Protocol") {
+              value = '<a href="attachments/' + value + '">' + value + '</a>';
+            } else if (key === "Additional Information") {
+              value = '<a href="attachments/' + value + '">' + value + '</a>';
+            } else if (key === "Additional Information (2)") {
+              value = '<a href="attachments/' + value + '">' + value + '</a>';
+            }
+
+            cell2.innerHTML = value;
+            row.appendChild(cell2);
+            tableBody.appendChild(row);
+            table.appendChild(tableBody);
+          }
+        }
+
+      // Append the table to the container element
+        tableContainer.appendChild(table);
+
       }
     }
   });

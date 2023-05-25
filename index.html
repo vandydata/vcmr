@@ -111,11 +111,6 @@
         <div class="col">
 
 
-          <!-- VCMR data -->
-          <div id="filterButtons" class="float-start btn-group  btn-group-sm" role="group" aria-label="Mutation type selection" style="">
-            Filter:&nbsp;
-          </div>
-
           <table id="myTable" class="table float-end"  style="width:100%">
             <!-- Table headers will be dynamically generated -->
           </table>
@@ -144,7 +139,7 @@
 
 <script>
   $(document).ready(function() {
-    Papa.parse("VCMR.csv", {
+    Papa.parse("VCMRv3.csv", {
       download: true,
       header: true,
       skipEmptyLines: "greedy", // Skip empty lines, including potential trailing newlines
@@ -172,13 +167,23 @@
               data: 'Formal Line Name',
               title: 'Formal Line Name',
               render: function(data, type, row) {
+                data = data.replace("{", "<sup>");
+                data = data.replace("}", "</sup>");
                 var vger_id = row['VGER ID'];
                 var link = '<a href="mouse.html?vger_id=' + encodeURIComponent(vger_id) + '">' + data + '</a>';
                 return link;
               }
             },
-            { data: 'Type of Mutation', title: 'Type of Mutation' },
-            { data: 'Allele Symbol', title: 'Allele Symbol' },
+            {
+              data: 'Type of Mutation',
+              title: 'Type of Mutation'
+            },
+            { data: 'Allele Symbol', title: 'Allele Symbol',
+              render: function(data) {
+                data = data.replace("{", "<sup>");
+                data = data.replace("}", "</sup>");
+                return data;
+              } },
 
             // Add more column definitions as needed
           ],
@@ -188,48 +193,37 @@
           }
         });
 
-        // Handle record clicks
-        $('#myTable').on('click', 'tr', function() {
-          var rowData = $('#myTable').DataTable().row(this).data();
-          // Extract the necessary data from rowData
-          // Navigate to the detail page using JavaScript or an anchor tag
+        // WIP below
+
+        var uniqueValues = table
+                .column(2) // Index 2 represents the 'Mutation Type' column
+                .data()
+                .unique()
+                .toArray();
+
+        // Generate radio buttons based on unique values
+        var radioButtons = uniqueValues.map(function(value) {
+          return '<input class="btn-check mutation-type" type="radio" name="mutationType" id="mutationType_' + value + '" value="' + value + '">' +
+                  '<label class="btn btn-outline-primary" for="mutationType_' + value + '">' + value + '</label>';
         });
 
-        // Get unique values from the desired column
-        var uniqueValues = Array.from(new Set(data.map(item => item['Type of Mutation'])));
-        console.log(uniqueValues);
+        // Insert radio buttons above the table
+        $('<div class="btn-group" role="group" aria-label="Basic radio toggle button group">' +
+                '<input class="btn-check mutation-type" type="radio" name="mutationType" id="mutationType_reset" value="">' +
+                '<label class="btn btn-outline-primary" for="mutationType_reset">Reset</label>' +
+                radioButtons.join('') +
+                '</div>').insertBefore('#myTable_wrapper');
 
+        // Handle radio button change event
+        $('.mutation-type').on('change', function() {
+          var selectedValue = $(this).val();
 
-        var container = $('#filterButtons');
-        function filterColumn( value ) {
-          table.column(2).search( value ).draw();
-        }
-
-        var resetButton = $('<button>', {
-          class: 'btn btn-light',
-          text: 'Reset',
-          click: function() {
-            filterColumn("");
-          }
+          // Filter the table based on the selected value
+          table
+                  .column(2)
+                  .search(selectedValue)
+                  .draw();
         });
-
-        container.append(resetButton);
-
-        uniqueValues.forEach(function(value) {
-          var button = $('<button>', {
-            class: 'btn  btn-outline-secondary',
-            text: value,
-            click: function() {
-              var filterValue = value;
-              //console.log(filterValue);
-              filterColumn(filterValue);
-            }
-          });
-
-          container.append(button);
-        });
-
-
 
 
       }
