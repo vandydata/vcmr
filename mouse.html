@@ -158,8 +158,19 @@
         table.classList.add('table-striped'); // Add the desired CSS class to the table
         const tableBody = document.createElement('tbody');
 
+        var skipKey = "Additional Mutation";
+        var keysToSkip = ["Allele Symbol 2", "MGI ID 2", "Zygosity at Cryopreservation 2", "Primary Citation 2"];
+
         for (var key in rowData) {
           if (rowData.hasOwnProperty(key)) {
+
+            if (key === "Formal Line Name_1") {
+              continue; // Skip this iteration and move to the next key
+            }
+
+
+
+
             var row = document.createElement("tr");
 
             var cell1 = document.createElement("th");
@@ -169,6 +180,8 @@
             var cell2 = document.createElement("td");
             var value = rowData[key];
 
+
+
             // Customize the value before displaying
             if (key === "Formal Line Name") {
               value = value.replace("{", "<sup>");
@@ -176,6 +189,10 @@
             } else if (key === "Common Line Name") {
               value = value.replace("{", "<sup>");
               value = value.replace("}", "</sup>");
+            } else if (key === "Primary Citation") {
+              value = '<a href="https://pubmed.ncbi.nlm.nih.gov/' + value + '">' + value + '</a>'
+            } else if (key === "Primary Citation 2") {
+              value = '<a href="https://pubmed.ncbi.nlm.nih.gov/' + value + '">' + value + '</a>'
             } else if (key === "Genotyping Protocol") {
               value = '<a href="attachments/' + value + '">' + value + '</a>';
             } else if (key === "Additional Information") {
