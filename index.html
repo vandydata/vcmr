@@ -236,24 +236,25 @@
                 .column('allele_symbol:name')
                 .data()
                 .unique()
+                .sort()
                 .toArray();
 
         var uniqueLabels = Array.from(new Set(alleleTypes.map(function(str) {
           return str.split("{")[0];
         })));
 
-        console.log(uniqueLabels);
+        //console.log(uniqueLabels);
 
 
-// Creating the filter label and dropdown container
+        // Creating the filter label and dropdown container
         var container = $('<div class="filter-container"></div>').appendTo('div.dataTables_filter');
         $('<label for="allele-filter">Filter by Gene:</label>').appendTo(container);
 
-// Creating the dropdown filter
+        // Creating the dropdown filter
         var select = $('<select id="allele-filter"></select>')
                 .appendTo(container)
                 .on('change', function() {
-                  table.column(2).search($(this).val()).draw();
+                  table.column('allele_symbol:name').search($(this).val()).draw();
                 });
 
        // Adding the default option
