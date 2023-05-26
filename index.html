@@ -197,7 +197,7 @@
           }
         });
 
-        // WIP below
+        // Mutation Types
         var uniqueValues = table
                 //.column(2) // Index 2 represents the '' column
                 .column('mutation_type:name')
@@ -230,6 +230,39 @@
         });
 
 
+        // Allele symbols
+        var alleleTypes = table
+                //.column(2) // Index 2 represents the '' column
+                .column('allele_symbol:name')
+                .data()
+                .unique()
+                .toArray();
+
+        var uniqueLabels = Array.from(new Set(alleleTypes.map(function(str) {
+          return str.split("{")[0];
+        })));
+
+        console.log(uniqueLabels);
+
+
+// Creating the filter label and dropdown container
+        var container = $('<div class="filter-container"></div>').appendTo('div.dataTables_filter');
+        $('<label for="allele-filter">Filter by Gene:</label>').appendTo(container);
+
+// Creating the dropdown filter
+        var select = $('<select id="allele-filter"></select>')
+                .appendTo(container)
+                .on('change', function() {
+                  table.column(2).search($(this).val()).draw();
+                });
+
+       // Adding the default option
+        $('<option value="">All</option>').appendTo(select);
+
+         // Adding the label options
+        uniqueLabels.forEach(function(label) {
+          $('<option value="' + label + '">' + label + '</option>').appendTo(select);
+        });
 
 
 
