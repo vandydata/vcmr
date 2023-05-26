@@ -162,8 +162,9 @@
           paging: false,
           dom: '<"pull-left" fi><t>',
           columns: [
-            { data: 'VGER ID', title: 'VGER ID' },
+            { name:"vger_id", data: 'VGER ID', title: 'VGER ID' },
             {
+              name: "name",
               data: 'Formal Line Name',
               title: 'Formal Line Name',
               render: function(data, type, row) {
@@ -175,10 +176,13 @@
               }
             },
             {
+              name: 'mutation_type',
               data: 'Type of Mutation',
               title: 'Type of Mutation'
             },
-            { data: 'Allele Symbol', title: 'Allele Symbol',
+            {
+              name: 'allele_symbol',
+              data: 'Allele Symbol', title: 'Allele Symbol',
               render: function(data) {
                 data = data.replace("{", "<sup>");
                 data = data.replace("}", "</sup>");
@@ -194,9 +198,9 @@
         });
 
         // WIP below
-
         var uniqueValues = table
-                .column(2) // Index 2 represents the 'Mutation Type' column
+                //.column(2) // Index 2 represents the '' column
+                .column('mutation_type:name')
                 .data()
                 .unique()
                 .toArray();
@@ -209,8 +213,8 @@
 
         // Insert radio buttons above the table
         $('<div class="btn-group" role="group" aria-label="Basic radio toggle button group">' +
-                '<input class="btn-check mutation-type" type="radio" name="mutationType" id="mutationType_reset" value="">' +
-                '<label class="btn btn-outline-primary" for="mutationType_reset">Reset</label>' +
+                '<input class="btn-check mutation-type" type="radio" name="mutationType" id="mutationType_reset"  checked="checked" value="">' +
+                '<label class="btn btn-outline-primary" for="mutationType_reset"><i class="fa-solid fa-xmark"></i></label>' +
                 radioButtons.join('') +
                 '</div>').insertBefore('#myTable_wrapper');
 
@@ -220,10 +224,14 @@
 
           // Filter the table based on the selected value
           table
-                  .column(2)
+                  .column('mutation_type:name')
                   .search(selectedValue)
                   .draw();
         });
+
+
+
+
 
 
       }
