@@ -13,6 +13,7 @@
   <!-- DataTables-->
   <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="/css/theme_1685457420314.css" rel="stylesheet" />
   <style>
     .bd-placeholder-img {
       font-size: 1.125rem;
@@ -48,29 +49,32 @@
     <h1>Vanderbilt Cryopreserved Mouse Repository</h1>
 
       <div class="row">
-        <div class="col-8">
+        <div class="col-9">
           <p class="lead">The Vanderbilt Cryopreserved Mouse Repository (VCMR) contains a unique collection of genetically-modified mice that available for rederivation.  All lines have been either generated or modified by Vanderbilt investigators, and are not available in any other repository.</p>
         </div>
-        <div class="col-4">
-          <div class="alert alert-warning" role="info">
-            <h4 class="alert-heading"><i class="fa-solid fa-xl fa-envelope" style="color: #15141A;"></i> Order this mouse!</h4>
-            <p></p>
+        <div class="col-3">
+          <div class="alert alert-info2" id="email-request">
+              <a class="btn btn-info" href="mailto://"><i class="fa-solid fa-envelope"></i> Order this mouse</a>
+            <!--<p></p>
             <hr>
-            <p class="mb-0">These are the instructions...</p>
+            <p class="mb-0">These are the instructions...</p>-->
           </div>
         </div>
       </div>
 
     <hr class="col-3 col-md-2 mb-5">
 
-    <div id="table-container2"></div>
+    <table id="myTable">
+      <tbody id="tableBody">
+      <!-- Rows will be dynamically added here -->
+      </tbody>
+    </table>
 
-    <div id="data-container"></div>
 
 
   </main>
   <footer class="pt-5 my-5 text-muted border-top">
-    Created by VGER &middot; &copy; 2023
+    Created by <a href="https://medschool.vanderbilt.edu/vcmr/">VGER</a> &copy; 2023
   </footer>
 </div>
 
@@ -91,7 +95,7 @@
   const rowId = urlParams.get('vger_id');
 
   // Load the CSV file
-  Papa.parse('VCMRv3.csv', {
+  Papa.parse('data/VCMRv4.csv', {
     download: true,
     header: true,
     skipEmptyLines: "greedy", // Skip empty lines, including potential trailing newlines
@@ -148,8 +152,181 @@
 
       */
 
+      function generateEmail(vger_id, name){
+        var emailUrl = window.location.origin + "/mouse.html?vger_id=" + vger_id;
+        var emailTo = "vcmr@vanderbilt.edu"
+        var emailSubject = "VCMR request for information"
+        var emailBody = `Dear VCMR,%0D%0A I am interested in the VCMR mouse line ${name} / VGER ID ${vger_id}  described at URL: ${emailUrl}. %0D%0A Please contact me with more information.`
 
-      if (rowData){
+        var element = document.getElementById('email-request');
+        //element.innerHTML  = `<a class="btn btn-info" href="mailto:${emailTo}?subject=${emailSubject}&body=${emailBody}"><i class="fa-solid fa-envelope"></i> Order this mouse</a>`;
+
+
+        var encodedURL = 'mailto:' + encodeURIComponent('vcmr@vanderbilt.edu') +
+                '?subject=' + encodeURIComponent('VCMR request for information') +
+                '&body=' + encodeURIComponent(`Dear VCMR,\n\nI am interested in the VCMR mouse line ${name} / VGER ID ${vger_id} described at ${emailUrl}.\n\nPlease contact me with more information.`);
+        element.innerHTML = `<a class="btn btn-info" href="${encodedURL}"><i class="fa-solid fa-envelope"></i> Order this mouse</a>`;
+
+
+      }
+
+      function generateRow(key, value) {
+        // Create a new table row
+        const newRow = document.createElement('tr');
+        // Populate the row with the key and value
+        newRow.innerHTML = `<th>${key}</th><td>${value}</td>`;
+        // Add the row to the table body
+        tableBody.appendChild(newRow);
+      }
+
+      function generateHeaderRow(data) {
+        // Create a new table row
+        const newRow = document.createElement('tr');
+        // Populate the row with the key and value
+        newRow.innerHTML = `<th colspan="2" style="font-size:120%; padding-top:40px; border-bottom:1px solid black;">${data}</th>`;
+        // Add the row to the table body
+        tableBody.appendChild(newRow);
+      }
+
+      if (rowData) {
+
+
+
+
+        generateEmail(rowData["VGER ID"], rowData["Formal Line Name"])
+
+        const table = document.getElementById('myTable');
+        table.classList.add('table'); // Add the desired CSS class to the table
+        //table.classList.add('table-striped'); // Add the desired CSS class to the table
+        const tableBody = document.getElementById('tableBody');
+
+        tableBody.innerHTML = '';
+
+        /*
+        Mouse Information:  Formal and common names, Description;
+        Genetic Alterations: Type of Mutation, Allele Symbol, MGI ID, primary citation, Genotyping protocol and additional attachments);
+        Cryopreservation and Strain Information:  Cryopreservation Method, VGER ID, Cryopreserved background strain, viability and fertility data, trial IVF % fertilization).
+         */
+
+        // MOUSE INFORMATION
+        data = "Mouse Information";
+        generateHeaderRow(data);
+
+        key = "Formal Line Name";
+        var value = rowData[key];
+        value = value.replace("{", "<sup>");
+        value = value.replace("}", "</sup>");
+        generateRow(key, value);
+
+        key = "Common Line Name";
+        var value = rowData[key];
+        value = value.replace("{", "<sup>");
+        value = value.replace("}", "</sup>");
+        generateRow(key, value);
+
+        key = "Description";
+        var value = rowData[key];
+        generateRow(key, value);
+
+        // GENETIC ALTERATION
+        data = "Genetic Alteration(s)";
+        generateHeaderRow(data);
+
+        key = "Type of Mutation";
+        var value = rowData[key];
+        generateRow(key, value);
+
+        key = "Allele Symbol";
+        var value = rowData[key];
+        generateRow(key, value);
+
+        key = "MGI ID";
+        var value = rowData[key];
+        value = '<a href="https://www.informatics.jax.org/allele/' + value + '">' + value + '</a>'
+        generateRow(key, value);
+
+        key = "Primary Citation";
+        var value = rowData[key];
+        value = '<a href="https://pubmed.ncbi.nlm.nih.gov/' + value + '">' + value + '</a>'
+        generateRow(key, value);
+
+        key = "Genotyping Protocol";
+        var value = rowData[key];
+        value = '<a href="attachments/' + value + '">' + value + '</a>';
+        generateRow(key, value);
+
+        key = "Additional Information";
+        var value = rowData[key];
+        value = '<a href="attachments/' + value + '">' + value + '</a>';
+        generateRow(key, value);
+
+        key = "Additional Information (2)";
+        var value = rowData[key];
+        value = '<a href="attachments/' + value + '">' + value + '</a>';
+        generateRow(key, value);
+
+
+
+        key = "Additional Mutation";
+        var value = rowData[key];
+        if (value.length > 0) {
+
+          key = "<br />" + key;
+          value = "<br />" + value;
+          generateRow(key, value);
+
+          key = "Allele Symbol 2";
+          var value = rowData[key];
+          generateRow(key, value);
+
+          key = "MGI ID2";
+          var value = rowData[key];
+          generateRow(key, value);
+
+          key = "Zygosity at Cryopreservation 2";
+          var value = rowData[key];
+          generateRow(key, value);
+
+          key = "Primary Citation 2";
+          var value = rowData[key];
+          value = '<a href="https://pubmed.ncbi.nlm.nih.gov/' + value + '">' + value + '</a>'
+          generateRow(key, value);
+
+        }
+
+        // Cryopreservation and Strain Information
+        data = "Cryopreservation and Strain Information";
+        generateHeaderRow(data);
+
+        key = "Cryopreservation Method";
+        var value = rowData[key];
+        generateRow(key, value);
+
+        key = "VGER ID";
+        var value = rowData[key];
+        generateRow(key, value);
+
+        key = "Cryopreserved Strain Background";
+        var value = rowData[key];
+        generateRow(key, value);
+
+        key = "Zygosity at Cryopreservation";
+        var value = rowData[key];
+        generateRow(key, value);
+
+        key = "Viability and Fertility Data";
+        var value = rowData[key];
+        generateRow(key, value);
+
+        key = "Trial IVF % Fertilization";
+        var value = rowData[key];
+        generateRow(key, value);
+
+
+      }
+
+
+      /*if (rowData){
         var tableContainer = document.getElementById("table-container2");
 
 
@@ -168,9 +345,6 @@
               continue; // Skip this iteration and move to the next key
             }
 
-
-
-
             var row = document.createElement("tr");
 
             var cell1 = document.createElement("th");
@@ -180,8 +354,6 @@
             var cell2 = document.createElement("td");
             var value = rowData[key];
 
-
-
             // Customize the value before displaying
             if (key === "Formal Line Name") {
               value = value.replace("{", "<sup>");
@@ -189,6 +361,9 @@
             } else if (key === "Common Line Name") {
               value = value.replace("{", "<sup>");
               value = value.replace("}", "</sup>");
+            } else if (key === "MGI ID"){
+              value = '<a href="https://www.informatics.jax.org/allele/' + value + '">' + value + '</a>'
+
             } else if (key === "Primary Citation") {
               value = '<a href="https://pubmed.ncbi.nlm.nih.gov/' + value + '">' + value + '</a>'
             } else if (key === "Primary Citation 2") {
@@ -211,7 +386,7 @@
       // Append the table to the container element
         tableContainer.appendChild(table);
 
-      }
+      }*/
     }
   });
 
