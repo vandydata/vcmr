@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
+  <meta name="description" content="The Vanderbilt Cryopreserved Mouse Repository (VCMR) contains a unique collection of genetically-modified mice that available for rederivation.  All lines have been either generated or modified by Vanderbilt investigators, and are not available in any other repository">
   <meta name="author" content="">
   <meta name="generator" content="0">
   <title>Vanderbilt Cryopreserved Mouse Repository (VCMR) - Managed by VGER at Vanderbilt University</title>
@@ -244,9 +244,6 @@
           return str.split("{")[0];
         })));
 
-        //console.log(uniqueLabels);
-
-
         // Creating the filter label and dropdown container
         var container = $('<div class="filter-container"></div>').appendTo('div.dataTables_filter');
         $('<label for="allele-filter">Filter by Gene:</label>').appendTo(container);
@@ -265,8 +262,6 @@
         uniqueLabels.forEach(function(label) {
           $('<option value="' + label + '">' + label + '</option>').appendTo(select);
         });
-
-
 
 
       }

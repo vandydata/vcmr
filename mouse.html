@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="description" content="The Vanderbilt Cryopreserved Mouse Repository (VCMR) contains a unique collection of genetically-modified mice that available for rederivation.  All lines have been either generated or modified by Vanderbilt investigators, and are not available in any other repository">
+  <meta name="author" content="Vanderbilt Genome Editing Resource">
   <meta name="generator" content="0">
-  <title>Starter Template · Bootstrap v5.0</title>
+  <title>Vanderbilt Cryopreserved Mouse Repository (VCMR) - Managed by VGER at Vanderbilt University</title>
 
   <!-- Bootstrap core CSS -->
   <link href="//cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -102,81 +102,28 @@
 
     complete: function(results) {
       const rowData = results.data.find(row => row['VGER ID'] === rowId);
-      //console.log(rowData);
-/*
-      if (rowData) {
-        // Display the row data in the HTML container
-        console.log(rowData);
-        // Create the HTML table
-        const table = document.createElement('table');
-        table.classList.add('table'); // Add the desired CSS class to the table
-        table.classList.add('table-striped'); // Add the desired CSS class to the table
-
-        // Create the table body
-        const tableBody = document.createElement('tbody');
-
-        // Iterate over the row data and create the table rows
-        Object.keys(rowData).forEach(key => {
-          const row = document.createElement('tr');
-
-          // Create table header cell
-          const headerCell = document.createElement('th');
-          headerCell.textContent = key;
-          row.appendChild(headerCell);
-
-          // Create table body cell
-          const bodyCell = document.createElement('td');
-          bodyCell.textContent = rowData[key];
-          row.appendChild(bodyCell);
-
-          tableBody.appendChild(row);
-        });
-
-        // Append the table body to the table
-        table.appendChild(tableBody);
-
-        // Append the table to the data container div
-        const dataContainer = document.getElementById('data-container');
-        dataContainer.appendChild(table);
-
-        // cookiecrumb
-        lineName = "› " + rowData["Formal Line Name"];
-        const cookieContainer = document.getElementById('cookie-container');
-        cookieContainer.innerText = lineName;
-
-      } else {
-        // Handle case when no matching row is found
-        const dataContainer = document.getElementById('data-container');
-        dataContainer.innerText = 'No matching row found.';
-      }
-
-      */
 
       function generateEmail(vger_id, name){
         var emailUrl = window.location.origin + "/mouse.html?vger_id=" + vger_id;
-        var emailTo = "vcmr@vanderbilt.edu"
-        var emailSubject = "VCMR request for information"
-        var emailBody = `Dear VCMR,%0D%0A I am interested in the VCMR mouse line ${name} / VGER ID ${vger_id}  described at URL: ${emailUrl}. %0D%0A Please contact me with more information.`
-
         var element = document.getElementById('email-request');
-        //element.innerHTML  = `<a class="btn btn-info" href="mailto:${emailTo}?subject=${emailSubject}&body=${emailBody}"><i class="fa-solid fa-envelope"></i> Order this mouse</a>`;
-
-
         var encodedURL = 'mailto:' + encodeURIComponent('vcmr@vanderbilt.edu') +
                 '?subject=' + encodeURIComponent('VCMR request for information') +
                 '&body=' + encodeURIComponent(`Dear VCMR,\n\nI am interested in the VCMR mouse line ${name} / VGER ID ${vger_id} described at ${emailUrl}.\n\nPlease contact me with more information.`);
         element.innerHTML = `<a class="btn btn-info" href="${encodedURL}"><i class="fa-solid fa-envelope"></i> Order this mouse</a>`;
-
-
       }
 
       function generateRow(key, value) {
+
+        if(value.length == 0) {
+          value = '<span class="text-muted"><small>Not provided</small></span>';
+        }
         // Create a new table row
         const newRow = document.createElement('tr');
         // Populate the row with the key and value
         newRow.innerHTML = `<th>${key}</th><td>${value}</td>`;
         // Add the row to the table body
         tableBody.appendChild(newRow);
+
       }
 
       function generateHeaderRow(data) {
@@ -190,8 +137,9 @@
 
       if (rowData) {
 
-
-
+        // Update page metadata
+        document.title = rowData["Formal Line Name"]
+        document.description = rowData["Common Line Name"] + " - " + rowData["Type of Mutation"];
 
         generateEmail(rowData["VGER ID"], rowData["Formal Line Name"])
 
@@ -201,12 +149,6 @@
         const tableBody = document.getElementById('tableBody');
 
         tableBody.innerHTML = '';
-
-        /*
-        Mouse Information:  Formal and common names, Description;
-        Genetic Alterations: Type of Mutation, Allele Symbol, MGI ID, primary citation, Genotyping protocol and additional attachments);
-        Cryopreservation and Strain Information:  Cryopreservation Method, VGER ID, Cryopreserved background strain, viability and fertility data, trial IVF % fertilization).
-         */
 
         // MOUSE INFORMATION
         data = "Mouse Information";
@@ -226,6 +168,8 @@
 
         key = "Description";
         var value = rowData[key];
+        console.log(value);
+        //value = encodeURIComponent(value);
         generateRow(key, value);
 
         // GENETIC ALTERATION
@@ -242,27 +186,37 @@
 
         key = "MGI ID";
         var value = rowData[key];
-        value = '<a href="https://www.informatics.jax.org/allele/' + value + '">' + value + '</a>'
+        if(value.length > 0) {
+          value = '<a href="https://www.informatics.jax.org/allele/' + value + '">' + value + '</a>'
+        }
         generateRow(key, value);
 
         key = "Primary Citation";
         var value = rowData[key];
-        value = '<a href="https://pubmed.ncbi.nlm.nih.gov/' + value + '">' + value + '</a>'
+        if(value.length > 0) {
+          value = '<a href="https://pubmed.ncbi.nlm.nih.gov/' + value + '">' + value + '</a>'
+        }
         generateRow(key, value);
 
         key = "Genotyping Protocol";
         var value = rowData[key];
-        value = '<a href="attachments/' + value + '">' + value + '</a>';
+        if(value.length > 0) {
+          value = '<a href="attachments/' + value + '">' + value + '</a>';
+        }
         generateRow(key, value);
 
         key = "Additional Information";
         var value = rowData[key];
-        value = '<a href="attachments/' + value + '">' + value + '</a>';
+        if(value.length > 0) {
+          value = '<a href="attachments/' + value + '">' + value + '</a>';
+        }
         generateRow(key, value);
 
         key = "Additional Information (2)";
         var value = rowData[key];
-        value = '<a href="attachments/' + value + '">' + value + '</a>';
+        if(value.length > 0) {
+          value = '<a href="attachments/' + value + '">' + value + '</a>';
+        }
         generateRow(key, value);
 
 
@@ -289,7 +243,9 @@
 
           key = "Primary Citation 2";
           var value = rowData[key];
-          value = '<a href="https://pubmed.ncbi.nlm.nih.gov/' + value + '">' + value + '</a>'
+          if(value.length > 0) {
+            value = '<a href="https://pubmed.ncbi.nlm.nih.gov/' + value + '">' + value + '</a>'
+          }
           generateRow(key, value);
 
         }
@@ -298,11 +254,11 @@
         data = "Cryopreservation and Strain Information";
         generateHeaderRow(data);
 
-        key = "Cryopreservation Method";
+        key = "VGER ID";
         var value = rowData[key];
         generateRow(key, value);
 
-        key = "VGER ID";
+        key = "Cryopreservation Method";
         var value = rowData[key];
         generateRow(key, value);
 
@@ -322,71 +278,7 @@
         var value = rowData[key];
         generateRow(key, value);
 
-
       }
-
-
-      /*if (rowData){
-        var tableContainer = document.getElementById("table-container2");
-
-
-        var table = document.createElement("table");
-        table.classList.add('table'); // Add the desired CSS class to the table
-        table.classList.add('table-striped'); // Add the desired CSS class to the table
-        const tableBody = document.createElement('tbody');
-
-        var skipKey = "Additional Mutation";
-        var keysToSkip = ["Allele Symbol 2", "MGI ID 2", "Zygosity at Cryopreservation 2", "Primary Citation 2"];
-
-        for (var key in rowData) {
-          if (rowData.hasOwnProperty(key)) {
-
-            if (key === "Formal Line Name_1") {
-              continue; // Skip this iteration and move to the next key
-            }
-
-            var row = document.createElement("tr");
-
-            var cell1 = document.createElement("th");
-            cell1.textContent = key;
-            row.appendChild(cell1);
-
-            var cell2 = document.createElement("td");
-            var value = rowData[key];
-
-            // Customize the value before displaying
-            if (key === "Formal Line Name") {
-              value = value.replace("{", "<sup>");
-              value = value.replace("}", "</sup>");
-            } else if (key === "Common Line Name") {
-              value = value.replace("{", "<sup>");
-              value = value.replace("}", "</sup>");
-            } else if (key === "MGI ID"){
-              value = '<a href="https://www.informatics.jax.org/allele/' + value + '">' + value + '</a>'
-
-            } else if (key === "Primary Citation") {
-              value = '<a href="https://pubmed.ncbi.nlm.nih.gov/' + value + '">' + value + '</a>'
-            } else if (key === "Primary Citation 2") {
-              value = '<a href="https://pubmed.ncbi.nlm.nih.gov/' + value + '">' + value + '</a>'
-            } else if (key === "Genotyping Protocol") {
-              value = '<a href="attachments/' + value + '">' + value + '</a>';
-            } else if (key === "Additional Information") {
-              value = '<a href="attachments/' + value + '">' + value + '</a>';
-            } else if (key === "Additional Information (2)") {
-              value = '<a href="attachments/' + value + '">' + value + '</a>';
-            }
-
-            cell2.innerHTML = value;
-            row.appendChild(cell2);
-            tableBody.appendChild(row);
-            table.appendChild(tableBody);
-          }
-        }
-
-      // Append the table to the container element
-        tableContainer.appendChild(table);
-
-      }*/
     }
   });
 
