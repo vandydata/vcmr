@@ -95,7 +95,7 @@
   const rowId = urlParams.get('vger_id');
 
   // Load the CSV file
-  Papa.parse('data/VCMRv4.csv', {
+  Papa.parse('data/VCMRv5.csv', {
     download: true,
     header: true,
     skipEmptyLines: "greedy", // Skip empty lines, including potential trailing newlines
@@ -182,6 +182,10 @@
 
         key = "Allele Symbol";
         var value = rowData[key];
+        if(value.length > 0) {
+          value = value.replace("{", "<sup>");
+          value = value.replace("}", "</sup>");
+        }
         generateRow(key, value);
 
         key = "MGI ID";
@@ -212,8 +216,9 @@
         }
         generateRow(key, value);
 
-        key = "Additional Information (2)";
+        key = "Extra Information";
         var value = rowData[key];
+        console.log(rowData[key]);
         if(value.length > 0) {
           value = '<a href="attachments/' + value + '">' + value + '</a>';
         }
@@ -233,7 +238,7 @@
           var value = rowData[key];
           generateRow(key, value);
 
-          key = "MGI ID2";
+          key = "MGI ID 2";
           var value = rowData[key];
           generateRow(key, value);
 
