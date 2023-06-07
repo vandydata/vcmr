@@ -74,7 +74,8 @@
 
   </main>
   <footer class="pt-5 my-5 text-muted border-top">
-    Created by <a href="https://medschool.vanderbilt.edu/vcmr/">VGER</a> &copy; 2023
+    Created by <a href="https://medschool.vanderbilt.edu/vcmr/">VGER</a> &copy; 2023<br />
+    <small>Last updated on 2023-06-07</small>
   </footer>
 </div>
 
@@ -108,7 +109,7 @@
         var element = document.getElementById('email-request');
         var encodedURL = 'mailto:' + encodeURIComponent('vcmr@vanderbilt.edu') +
                 '?subject=' + encodeURIComponent('VCMR request for information') +
-                '&body=' + encodeURIComponent(`Dear VCMR,\n\nI am interested in the VCMR mouse line ${name} / VGER ID ${vger_id} described at ${emailUrl}.\n\nPlease contact me with more information.`);
+                '&body=' + encodeURIComponent(`Dear VCMR,\n\nI am interested in the VCMR mouse line ${name} (VGER ID: ${vger_id}) described at ${emailUrl}.\n\nPlease contact me with more information.`);
         element.innerHTML = `<a class="btn btn-info" href="${encodedURL}"><i class="fa-solid fa-envelope"></i> Order this mouse</a>`;
       }
 
