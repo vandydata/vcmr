@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="The Vanderbilt Cryopreserved Mouse Repository (VCMR) contains a unique collection of genetically-modified mice that available for rederivation.  All lines have been either generated or modified by Vanderbilt investigators, and are not available in any other repository">
+  <meta name="author" content="Vanderbilt Genome Editing Resource">
+  <meta name="generator" content="0">
+  <title>Vanderbilt Cryopreserved Mouse Repository (VCMR) - Managed by VGER at Vanderbilt University</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="//cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <!-- DataTables-->
+  <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="/css/theme_1685457420314.css" rel="stylesheet" />
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+
+    th {
+      white-space: nowrap;
+    }
+  </style>
+
+</head>
+<body>
+
+<div class="col-lg-8 mx-auto p-3 py-md-5">
+  <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+    <a href="/" class="d-flex align-items-center text-dark">
+      <span class="fs-4">VCMR</span>
+    </a>
+    <span  class="fs-4" id="cookie-container" style="padding-left:5px;"></span>
+  </header>
+
+  <main>
+    <h1>Vanderbilt Cryopreserved Mouse Repository</h1>
+
+      <div class="row">
+        <div class="col-12">
+          <p class="lead">The Vanderbilt Cryopreserved Mouse Repository (VCMR) contains a unique collection of genetically-modified mice that available for rederivation.  All lines have been either generated or modified by Vanderbilt investigators, and are not available in any other repository.</p>
+        </div>
+      </div>
+
+    <hr class="col-3 col-md-2 mb-5">
+
+    <h2>Releases</h2>
+
+    <h3 id="1.1">1.1 - Released on January 4, 2024 </h3>
+    <ul>
+      <li>Updated homepage and mouse pages to support annotation changes (below)</li>
+      <li>Annotation updates
+        <ul>
+          <li><code>Availability</code> added (home page)</li>
+          <li><code>Description</code> split into <code>Mutation Description</code> and <code>Investigator Description</code> (mouse page)</li>
+          <li><code>Type of Mutation</code> changed to <code>Allele Class</code> (home and mouse page)</li>
+          <li><code>Mutation Class</code> added (Mouse page)</li>
+          <li><code>Additional Mutation</code> changed to <code>Allele Class 2</code> (Mouse page)</li>
+          <li><code>Mutation Description 2</code> added (Mouse page)</li>
+          <li><code>Mutation Class 2</code> added (Mouse page)</li>
+        </ul>
+
+      </li>
+      <li>New data loaded
+        <ul>
+          <li>1 mouse record added (AEU)</li>
+          <li>57 total</li>
+          <li>Source: <code>data/VCMRv6.anno.csv</code> derived from <code>data/VCMRv6.xlsx </code> after header/column revalidation</li>
+        </ul>
+      </li>
+      <li>Added page for Releases (what you are currently reading), to openly communicate updates</li>
+      <li>Added MGI ID hyperlink in secondary mutation, to match behavior in primary mutation</li>
+
+    </ul>
+
+    <h3 id="1.0">1.0 - Releases on May 17, 2023</h3>
+    <ul>
+      <li>First release after refactor data and code from Labnodes</li>
+      <li>56 mouse records included (data/VCMRv5.csv)</li>
+    </ul>
+
+  </main>
+  <footer class="pt-5 my-5 text-muted border-top">
+    Created by <a href="https://medschool.vanderbilt.edu/vcmr/">VGER</a> &copy; 2023-2024<br/>
+    <small><a href="releases.html#1.1">Version 1.1</a> &middot; Last updated on 2024-01-04</small>
+  </footer>
+</div>
+
+
+<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
+<!-- DataTables-->
+<script src="//code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<!-- PapaParse-->
+<script src="//cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js" integrity="sha512-dfX5uYVXzyU8+KHqj8bjo7UkOdg18PaOtpa48djpNbZHwExddghZ+ZmzWT06R5v6NSk3ZUfsH6FNEDepLx9hPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</body>
+</html>

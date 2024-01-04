@@ -127,8 +127,8 @@
 
   </main>
   <footer class="pt-5 my-5 text-muted border-top">
-    Created by <a href="https://medschool.vanderbilt.edu/vcmr/">VGER</a> &copy; 2023<br/>
-    <small>Last updated on 2023-06-07</small>
+    Created by <a href="https://medschool.vanderbilt.edu/vcmr/">VGER</a> &copy; 2023-2024<br/>
+    <small><a href="releases.html#1.1">Version 1.1</a> &middot; Last updated on 2024-01-04</small>
   </footer>
 </div>
 
@@ -146,7 +146,7 @@
 
 <script>
   $(document).ready(function() {
-    Papa.parse("data/VCMRv5.csv", {
+    Papa.parse("data/VCMRv6.anno.csv", {
       download: true,
       header: true,
       skipEmptyLines: "greedy", // Skip empty lines, including potential trailing newlines
@@ -169,7 +169,7 @@
           paging: false,
           dom: '<"pull-left" fi><t>',
           columns: [
-            { name:"vger_id", data: 'VGER ID', title: 'VGER ID' },
+            //{ name:"vger_id", data: 'VGER ID', title: 'VGER ID' },
             {
               name: "name",
               data: 'Formal Line Name',
@@ -184,17 +184,28 @@
             },
             {
               name: 'mutation_type',
-              data: 'Type of Mutation',
-              title: 'Type of Mutation'
+              data: 'Allele Class',
+              title: 'Allele Class'
             },
             {
-              name: 'allele_symbol',
-              data: 'Allele Symbol', title: 'Allele Symbol',
-              render: function(data) {
-                data = data.replace("{", "<sup>");
-                data = data.replace("}", "</sup>");
-                return data;
-              } },
+              name: 'mutation_class',
+              data: 'Mutation Class',
+              title: 'Mutation Class'
+            },
+            // {
+            //   name: 'allele_symbol',
+            //   data: 'Allele Symbol', title: 'Allele Symbol',
+            //   render: function(data) {
+            //     data = data.replace("{", "<sup>");
+            //     data = data.replace("}", "</sup>");
+            //     return data;
+            //   }
+            // },
+            {
+              name: 'availability',
+              data: 'Availability',
+              title: 'Availability'
+            }
 
             // Add more column definitions as needed
           ],

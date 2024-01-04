@@ -74,8 +74,8 @@
 
   </main>
   <footer class="pt-5 my-5 text-muted border-top">
-    Created by <a href="https://medschool.vanderbilt.edu/vcmr/">VGER</a> &copy; 2023<br />
-    <small>Last updated on 2023-06-07</small>
+    Created by <a href="https://medschool.vanderbilt.edu/vcmr/">VGER</a> &copy; 2023-2024<br/>
+    <small><a href="releases.html#1.1">Version 1.1</a> &middot; Last updated on 2024-01-04</small>
   </footer>
 </div>
 
@@ -96,7 +96,7 @@
   const rowId = urlParams.get('vger_id');
 
   // Load the CSV file
-  Papa.parse('data/VCMRv5.csv', {
+  Papa.parse('data/VCMRv6.anno.csv', {
     download: true,
     header: true,
     skipEmptyLines: "greedy", // Skip empty lines, including potential trailing newlines
@@ -140,7 +140,7 @@
 
         // Update page metadata
         document.title = rowData["Formal Line Name"]
-        document.description = rowData["Common Line Name"] + " - " + rowData["Type of Mutation"];
+        document.description = rowData["Common Line Name"] + " - " + rowData["Allele Class"];
 
         generateEmail(rowData["VGER ID"], rowData["Formal Line Name"])
 
@@ -167,7 +167,13 @@
         value = value.replace("}", "</sup>");
         generateRow(key, value);
 
-        key = "Description";
+        key = "Mutation Description";
+        var value = rowData[key];
+        //value = encodeURIComponent(value);
+        generateRow(key, value);
+
+
+        key = "Investigator Description";
         var value = rowData[key];
         console.log(value);
         //value = encodeURIComponent(value);
@@ -177,7 +183,7 @@
         data = "Genetic Alteration(s)";
         generateHeaderRow(data);
 
-        key = "Type of Mutation";
+        key = "Allele Class";
         var value = rowData[key];
         generateRow(key, value);
 
@@ -187,6 +193,10 @@
           value = value.replace("{", "<sup>");
           value = value.replace("}", "</sup>");
         }
+        generateRow(key, value);
+
+        key = "Mutation Class";
+        var value = rowData[key];
         generateRow(key, value);
 
         key = "MGI ID";
@@ -227,7 +237,7 @@
 
 
 
-        key = "Additional Mutation";
+        key = "Allele Class 2";
         var value = rowData[key];
         if (value.length > 0) {
 
@@ -239,8 +249,19 @@
           var value = rowData[key];
           generateRow(key, value);
 
+          key = "Mutation Class 2";
+          var value = rowData[key];
+          generateRow(key, value);
+
+          key = "Mutation Description 2";
+          var value = rowData[key];
+          generateRow(key, value);
+
           key = "MGI ID 2";
           var value = rowData[key];
+          if(value.length > 0) {
+            value = '<a href="https://www.informatics.jax.org/allele/' + value + '">' + value + '</a>'
+          }
           generateRow(key, value);
 
           key = "Zygosity at Cryopreservation 2";
@@ -263,6 +284,10 @@
         key = "VGER ID";
         var value = rowData[key];
         generateRow(key, value);
+
+        //key = "Availability";
+        //var value = rowData[key];
+        //generateRow(key, value);
 
         key = "Cryopreservation Method";
         var value = rowData[key];
