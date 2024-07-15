@@ -54,8 +54,8 @@
 
   </main>
   <footer class="pt-5 my-5 text-muted border-top">
-    Created by <a href="https://medschool.vanderbilt.edu/vcmr/">VGER</a> &copy; 2023<br/>
-    <small>Last updated on 2023-06-07</small>
+    Created by <a href="https://medschool.vanderbilt.edu/vcmr/">VGER</a> &copy; 2023-current<br/>
+    <small>Last updated on 2024-07-15</small>
   </footer>
 </div>
 
@@ -104,7 +104,8 @@
     }
 
 // Load the CSV file
-    Papa.parse("data/VCMRv5.csv", {
+    Papa.parse("data/VCMRv7.csv", {
+      download: true,
       download: true,
       header: true,
       complete: function(results) {
