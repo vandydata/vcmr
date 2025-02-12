@@ -31,6 +31,12 @@ VGER's VCMR was previously hosted on Labnodes. It was transferred to FilemakerPr
 
 
 ## Notes
+- Data delivery
+
+   - performed by Jennifer Skelton
+   - Provides CSV and attachments (PDFs)
+
+- IDE - webstorm
 - local dev via local webserver - `python -m http.server 8000` then http://localhost:8000/index.html
 - http://vcmr.vcscb.org/ - custom address, VUIT added CNAME record for DNS
 - The `CNAME` file in the repository is Github-generated!
@@ -46,3 +52,18 @@ VGER's VCMR was previously hosted on Labnodes. It was transferred to FilemakerPr
 
 ## Resources
 - https://stackoverflow.com/questions/46455900/subdomain-of-website-for-github-pages-project 
+
+## Releases
+
+### 2025-02-12 - VCMRv8
+
+- VCMRv7: 63 rows
+- VCMRv8: 65 rows (+2 rows)
+
+Number of columns:
+
+- VCMRv7: 26 columns
+- VCMRv8: 28 columns (+2 columns)
+
+> Jennifer:
+> Attached is version 8 of the VCMR. I have added two new columns, but that is just for my information. I have been working with the MGI to get strain names and strain MGI IDs for the lines we have in the repository. Those two columns (Strain MGI Allele Name & Strain MGI allele ID) do not have to be included in the data shown on the VCMR.
