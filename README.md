@@ -67,3 +67,10 @@ Number of columns:
 
 > Jennifer:
 > Attached is version 8 of the VCMR. I have added two new columns, but that is just for my information. I have been working with the MGI to get strain names and strain MGI IDs for the lines we have in the repository. Those two columns (Strain MGI Allele Name & Strain MGI allele ID) do not have to be included in the data shown on the VCMR.
+
+### 2025-06-27 - VCMRv9
+
+- VCMRv9: 19 new rows
+- Made the Primary citation (and primary citation 2) say “Not published” instead of Not provided
+- 
+
