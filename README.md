@@ -72,5 +72,10 @@ Number of columns:
 
 - VCMRv9: 19 new rows
 - Made the Primary citation (and primary citation 2) say “Not published” instead of Not provided
+
+### 2025-11-04  - VCMRv11 (v 1.5)
+
+- (skipped v10)
+- VCMRv11: 1 new rows
 - 
 
