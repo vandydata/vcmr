@@ -81,6 +81,8 @@ Number of columns:
 
 ### 2026-04-30 - VCMRv12 (v 1.6)
 
+- open xlsx, then export to CSV/UTF8 (not ANSI, as it drops special chars)
+
 * Can this page be linked     back to the VCMR website? [https://medschool.vanderbilt.edu/vcmr/](https://nam04.safelinks.protection.outlook.com/?url=https%3A%2F%2Fmedschool.vanderbilt.edu%2Fvcmr%2F&data=05|02|jp.cartailler@Vanderbilt.Edu|c454945eeef642e6f93908dea6c26fd3|ba5a7f39e3be4ab3b45067fa80faecad|0|0|639131552449572614|Unknown|TWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D|0|||&sdata=6NjE0JZL5oDFQWmg%2BbDvWk78cn94Np2HDeaMmCc2oCU%3D&reserved=0)
 * In the description at     the top of the page, the word “are” is missing. The Vanderbilt     Cryopreserved Mouse Repository (VCMR) contains a unique collection of     genetically-modified mice that ARE     available for rederivation.
 * In the bullet point     section for accepting strains into the VCMR, please delete the word “to”     in the second bullet point. If the strain is available elsewhere,     has it been modified by changing the genetic background to through intercrossing with other alleles?
