@@ -107,3 +107,13 @@ Number of columns:
   17. NEW: Add      Genome_Editing_AJA.pdf
   18. NEW: Add      Genotyping_Protocol_AMB.pdf
 
+
+
+### 2026-10-07- VCMRv13 (v 1.7)
+
+- open VCMRv13.xlsx, then export to CSV/UTF8 (not ANSI, as it drops special chars)
+- mainly annotaton update
+- pages to update:
+  - index.html
+  - mouse.html
+  - releases.html
